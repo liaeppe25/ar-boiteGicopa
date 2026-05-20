@@ -20,66 +20,99 @@
   >
     <a-assets>
       <a-asset-item id="BoiteGicopaVrModel" src="BoiteGicopaVr.glb"></a-asset-item>
+      <!-- si tu veux un modèle différent pour la 2e target, ajoute-le ici -->
+      <!-- <a-asset-item id="AutreModele" src="autre-modele.glb"></a-asset-item> -->
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-    <!-- Lumières (ajuste les intensités si nécessaire) -->
+
     <a-light type="ambient" intensity="1"></a-light>
-    <a-light type="directional" position="1 2 1" intensity="1.2"castShadow="true"></a-light>
+    <a-light type="directional" position="1 2 1" intensity="1.2" castShadow="true"></a-light>
 
+    <!-- TARGET 0 -->
+    <a-entity mindar-image-target="targetIndex: 0" id="target0">
+      <a-entity
+        id="parent0"
+        rotation="0 0 0"
+        animation="property: rotation;
+                   to: 0 0 360;
+                   loop: true;
+                   dur: 10000;
+                   easing: linear;
+                   startEvents: start-rotate">
 
-  <!-- Parent = rotation lente continue -->
-  <a-entity mindar-image-target="targetIndex: 0" id="target", id="target(1)">
+        <a-entity
+          id="BoiteGicopaVr0"
+          gltf-model="#BoiteGicopaVrModel"
+          position="0 0 -0.8"
+          scale="0.5 0.5 0.5"
+          rotation="0 0 0"
+          animation__move="property: position;
+                           from: 0 0 -0.8;
+                           to: 0 0 0;
+                           dur: 1200;
+                           easing: easeOutBack;
+                           startEvents: start-animation"
+          animation__spin="property: rotation;
+                           from: 0 0 0;
+                           to: 0 0 360;
+                           dur: 1200;
+                           easing: easeOutCubic;
+                           startEvents: start-animation">
+        </a-entity>
 
-  <!-- Rotation lente continue -->
-  <a-entity
-    id="parent"
-    rotation="0 0 0"
-    animation="property: rotation;
-               to: 0 0 360;
-               loop: true;
-               dur: 10000;
-               easing: linear;
-               startEvents: start-rotate">
-
-    <!-- Modèle -->
-    <a-entity
-      id="BoiteGicopaVr"
-      gltf-model="#BoiteGicopaVrModel"
-      position="0 0 -0.8"
-      scale="0.5 0.5 0.5"
-      rotation="0 0 0"
-
-      animation__move="property: position;
-                       from: 0 0 -0.8;
-                       to: 0 0 0;
-                       dur: 1200;
-                       easing: easeOutBack;
-                       startEvents: start-animation"
-
-      animation__spin="property: rotation;
-                       from: 0 0 0;
-                       to: 0 0 360;
-                       dur: 1200;
-                       easing: easeOutCubic;
-                       startEvents: start-animation">
+      </a-entity>
     </a-entity>
 
-  </a-entity>
+    <!-- TARGET 1 -->
+    <a-entity mindar-image-target="targetIndex: 1" id="target1">
+      <a-entity
+        id="parent1"
+        rotation="0 0 0"
+        animation="property: rotation;
+                   to: 0 0 360;
+                   loop: true;
+                   dur: 10000;
+                   easing: linear;
+                   startEvents: start-rotate">
 
-</a-entity>
+        <a-entity
+          id="BoiteGicopaVr1"
+          gltf-model="#BoiteGicopaVrModel"
+          position="0 0 -0.8"
+          scale="0.5 0.5 0.5"
+          rotation="0 0 0"
+          animation__move="property: position;
+                           from: 0 0 -0.8;
+                           to: 0 0 0;
+                           dur: 1200;
+                           easing: easeOutBack;
+                           startEvents: start-animation"
+          animation__spin="property: rotation;
+                           from: 0 0 0;
+                           to: 0 0 360;
+                           dur: 1200;
+                           easing: easeOutCubic;
+                           startEvents: start-animation">
+        </a-entity>
 
+      </a-entity>
+    </a-entity>
 
+    <script>
+      const target0 = document.querySelector("#target0");
+      const target1 = document.querySelector("#target1");
 
-<script>
-  const target = document.querySelector("#target");
+      target0.addEventListener("targetFound", () => {
+        document.querySelector("#BoiteGicopaVr0").emit("start-animation");
+        document.querySelector("#parent0").emit("start-rotate");
+      });
 
-  target.addEventListener("targetFound", () => {
-    document.querySelector("#BoiteGicopaVr").emit("start-animation");
-    document.querySelector("#parent").emit("start-rotate");
-  });
-</script>
-
+      target1.addEventListener("targetFound", () => {
+        document.querySelector("#BoiteGicopaVr1").emit("start-animation");
+        document.querySelector("#parent1").emit("start-rotate");
+      });
+    </script>
 
   </a-scene>
 </body>
